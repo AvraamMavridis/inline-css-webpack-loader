@@ -1,38 +1,56 @@
-//import cssParser from 'css';
+import cssParser from 'css';
+import sass from 'node-sass';
 
-//
-// Transform implementation or originally thanks to
-// https://github.com/raphamorim/native-css
-//
+/**
+ * Converts css properties to upperCase e.g.
+ * background-color -> backgroundColor
+ */
+const getDeclarationProperty = function( property )
+{
+  let propertyCharacters = property.split('');
+  propertyCharacters = propertyCharacters.map( ( char, index ) => {
+      return propertyCharacters[ index - 1 ] === '-' ? char.toUpperCase() : char;
+  } );
+  return propertyCharacters.join( '' ).replace( '-', '' );
+}
 
-function transformRules(self, rules, result) {
-    rules.forEach(function (rule) {
-        var obj = {};
-        if (rule.type === 'media') {
-            var name = mediaNameGenerator(rule.media);
-            var media = result[name] = result[name] || {
+/**
+ * Transform css rules to react friendly objects
+ */
+const transformRules = function( self, rules )
+{
+    const result = {};
+    rules.forEach( rule => {
+        const obj = {};
+        if (rule.type === 'media')
+        {
+            const name = mediaNameGenerator(rule.media);
+            const media = result[name] = result[name] || {
                 "__expression__": rule.media
             };
             transformRules(self, rule.rules, media)
-        } else if (rule.type === 'rule') {
-            rule.declarations.forEach(function (declaration) {
+        }
+        else if (rule.type === 'rule') {
+            rule.declarations.forEach( declaration => {
                 if (declaration.type === 'declaration') {
-                    obj[declaration.property] = declaration.value;
+                    const declProperty = getDeclarationProperty( declaration.property );
+                    obj[declProperty] = declaration.value;
                 }
             });
-            rule.selectors.forEach(function (selector) {
+            rule.selectors.forEach( selector => {
                 var name = nameGenerator(selector.trim());
                 result[name] = obj;
             });
         }
     });
+    return result;
 }
 
-var mediaNameGenerator = function (name) {
+const mediaNameGenerator = function(name) {
     return '@media ' + name;
 };
 
-var nameGenerator = function (name) {
+const nameGenerator = function(name) {
     name = name.replace(/\s\s+/g, ' ');
     name = name.replace(/[^a-zA-Z0-9]/g, '_');
     name = name.replace(/^_+/g, '');
@@ -40,30 +58,19 @@ var nameGenerator = function (name) {
     return name;
 };
 
-function transform (inputCssText) {
+const transform = function( inputCssText )
+{
+  const res = sass.renderSync( { data: inputCssText } );
+  const cssToParse = res.css.toString();
 
-  if(!inputCssText) {
-    throw new Error('missing css text to transform');
-  }
-
-  // If the input "css" doesn't wrap it with a css class (raw styles)
-  // we need to wrap it with a style so the css parser doesn't choke.
-  var bootstrapWithCssClass = false;
-  if(inputCssText.indexOf("{") === -1) {
-    bootstrapWithCssClass = true;
-    inputCssText = `.bootstrapWithCssClass { ${inputCssText} }`;
-  }
-
-  var css = cssParser.parse(inputCssText);
-  var result = {};
-  transformRules(this, css.stylesheet.rules, result);
-
-  // Don't expose the implementation detail of our wrapped css class.
-  if(bootstrapWithCssClass) {
-    result = result.bootstrapWithCssClass;
-  }
+  const css = cssParser.parse(cssToParse);
+  const result = transformRules( this, css.stylesheet.rules );
 
   return result;
 }
 
-export default transform;
+module.exports = function ( source )
+{
+  const result = transform( source );
+  return 'module.exports = ' + JSON.stringify( result ) + ';';
+}
