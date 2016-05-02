@@ -1,4 +1,4 @@
-import cssParser from 'css';
+//import cssParser from 'css';
 
 //
 // Transform implementation or originally thanks to
@@ -40,13 +40,13 @@ var nameGenerator = function (name) {
     return name;
 };
 
-export function transform (inputCssText) {
+function transform (inputCssText) {
 
   if(!inputCssText) {
     throw new Error('missing css text to transform');
   }
 
-  // If the input "css" doesn't wrap it with a css class (raw styles) 
+  // If the input "css" doesn't wrap it with a css class (raw styles)
   // we need to wrap it with a style so the css parser doesn't choke.
   var bootstrapWithCssClass = false;
   if(inputCssText.indexOf("{") === -1) {
@@ -65,3 +65,5 @@ export function transform (inputCssText) {
 
   return result;
 }
+
+export default transform;
