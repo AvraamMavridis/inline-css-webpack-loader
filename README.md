@@ -9,6 +9,17 @@ Convert `scss`, `sass`, `css` files to React friendly objects that you can use t
 
 [![NPM](https://nodei.co/npm/inline-css-webpack-loader.png?mini=true)](https://nodei.co/npm/inline-css-webpack-loader/)
 
+Webpack config:
+
+```js
+  ...
+	{
+		test: /\.scss$/,
+		loader: 'inline-css-webpack-loader'
+	},
+	...
+```
+
 ##Example
 
 e.g.
