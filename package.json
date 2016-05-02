@@ -1,0 +1,30 @@
+{
+  "name": "inline-css-webpack-loader",
+  "version": "0.0.1",
+  "description": "Load Sass/Css file and use them as inline css",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AvraamMavridis/inline-css-webpack-loader.git"
+  },
+  "keywords": [
+    "inline",
+    "react",
+    "css",
+    "sass",
+    "scss"
+  ],
+  "author": "Avraam Mavridis",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/AvraamMavridis/inline-css-webpack-loader/issues"
+  },
+  "homepage": "https://github.com/AvraamMavridis/inline-css-webpack-loader#readme",
+  "devDependencies": {
+    "css": "^2.2.1",
+    "node-sass": "^3.6.0"
+  }
+}
