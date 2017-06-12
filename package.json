@@ -1,6 +1,6 @@
 {
   "name": "inline-css-webpack-loader",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Load Sass/Css file and use them as inline css",
   "main": "lib/index.js",
   "scripts": {
