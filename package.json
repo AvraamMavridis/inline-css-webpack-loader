@@ -34,6 +34,6 @@
   },
   "dependencies": {
     "css": "^2.2.1",
-    "node-sass": "^3.6.0"
+    "node-sass": "^4.5.3"
   }
 }
