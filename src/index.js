@@ -11,7 +11,7 @@ const getDeclarationProperty = function( property )
   propertyCharacters = propertyCharacters.map( ( char, index ) => {
       return propertyCharacters[ index - 1 ] === '-' ? char.toUpperCase() : char;
   } );
-  return propertyCharacters.join( '' ).replace( '-', '' );
+  return propertyCharacters.join( '' ).replace(/\-/g, '' );
 }
 
 /**
