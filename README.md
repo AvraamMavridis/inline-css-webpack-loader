@@ -7,7 +7,7 @@ Convert `scss`, `sass`, `css` files to React friendly objects that you can use t
 
 ##Install
 
-[![NPM](https://nodei.co/npm/inline-css-webpack-loader.png?mini=true)](https://nodei.co/npm/inline-css-webpack-loader/)
+[![NPM](https://nodei.co/npm/inline-css-webpack-loader.png?mini=true)](https://nodei.co/npm/inline-css-webpack-loader/) [![Greenkeeper badge](https://badges.greenkeeper.io/AvraamMavridis/inline-css-webpack-loader.svg)](https://greenkeeper.io/)
 
 Webpack config:
 
